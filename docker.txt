@@ -1,0 +1,1466 @@
+1. Install Docker, either on your native OS or on a VM. Make sure it runs. type "docker -v" to check if it's installed.
+=>
+C:\Users\pawar>docker -v
+Docker version 20.10.8, build 3967b7d
+
+docker --help ---> This command shows all available options and commands to work with images and containers.
+=>
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default
+                           "C:\\Users\\pawar\\.docker")
+  -c, --context string     Name of the context to use to connect to the
+                           daemon (overrides DOCKER_HOST env var and
+                           default context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level
+                           ("debug"|"info"|"warn"|"error"|"fatal")
+                           (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default
+                           "C:\\Users\\pawar\\.docker\\ca.pem")
+      --tlscert string     Path to TLS certificate file (default
+                           "C:\\Users\\pawar\\.docker\\cert.pem")
+      --tlskey string      Path to TLS key file (default
+                           "C:\\Users\\pawar\\.docker\\key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  builder     Manage builds
+  buildx*     Build with BuildKit (Docker Inc., v0.6.1-docker)
+  compose*    Docker Compose (Docker Inc., v2.0.0-rc.1)
+  config      Manage Docker configs
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  scan*       Docker Scan (Docker Inc., v0.8.0)
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+docker images --help ---> This command shows all the avaialble options and commands to work with docker images.
+=>
+C:\Users\pawar>docker images --help
+
+Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]
+
+List images
+
+Options:
+  -a, --all             Show all images (default hides intermediate images)
+      --digests         Show digests
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Pretty-print images using a Go template
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only show image IDs
+
+docker ps --help ---> This command shows all the avaialble options and commands to work with docker containers.
+=>
+C:\Users\pawar>docker ps --help
+
+Usage:  docker ps [OPTIONS]
+
+List containers
+
+Options:
+  -a, --all             Show all containers (default shows just running)
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Pretty-print containers using a Go template
+  -n, --last int        Show n last created containers (includes all
+                        states) (default -1)
+  -l, --latest          Show the latest created container (includes all
+                        states)
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only display container IDs
+  -s, --size            Display total file sizes
+
+2. Find a image from dockerhub of your choice(recommeded: nginx), don't use browser, pull the official image from dockerhub.
+=>
+C:\Users\pawar>docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+Digest: sha256:4d4d96ac750af48c6a551d757c1cbfc071692309b491b70b2b8976e102dd3fef
+Status: Image is up to date for nginx:latest
+docker.io/library/nginx:latest
+
+3. List all the available images in your machine/vm, make sure you see recently pulled image in the list.
+=>
+C:\Users\pawar>docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+ubuntu       latest    fb52e22af1b0   32 hours ago   72.8MB
+redis        latest    ddcca4b8a6f0   2 weeks ago    105MB
+nginx        latest    dd34e67e3371   2 weeks ago    133MB
+ubuntu       <none>    1318b700e415   5 weeks ago    72.8MB
+alpine/git   latest    b8f176fa3f0d   3 months ago   25.1MB
+jenkins      2.60.3    cd14cecfdb3a   3 years ago    696MB
+
+4.Find out the "Full" ImageId of the image that you pulled and write it below.
+=>
+C:\Users\pawar>docker images -q
+fb52e22af1b0
+ddcca4b8a6f0
+dd34e67e3371
+1318b700e415
+b8f176fa3f0d
+cd14cecfdb3a
+
+5.Create a container of your image.
+=>
+C:\Users\pawar>docker run --name mybash -it ubuntu
+root@b2c9de61a173:/#
+
+6. List all the running containers.
+=>
+C:\Users\pawar>docker container ls
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+b2c9de61a173   ubuntu    "bash"    3 minutes ago   Up 5 seconds             mybash
+
+7. List all the running and stopped containers.
+=>
+C:\Users\pawar>docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED          STATUS                      PORTS     NAMES
+b2c9de61a173   ubuntu           "bash"                   6 minutes ago    Up About a minute                     mybash
+3cc2956a449d   nginx            "/docker-entrypoint.…"   10 minutes ago   Up About a minute           80/tcp    mynginx
+aa73e482ac98   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (143) 46 hours ago             eloquent_dirac
+aae58cef2852   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (143) 46 hours ago             myjenkin757c30a48ff8   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (2) 46 hours ago               myjenkins
+2d1999b6b9c0   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (2) 46 hours ago               myjenkins2
+b21968187d0f   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (2) 46 hours ago               myjenkins1
+fe370e3e4bb9   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (143) 46 hours ago             happy_benz
+f494b1ac1212   jenkins:2.60.3   "/bin/tini -- /usr/l…"   46 hours ago     Exited (2) 46 hours ago               gifted_lichterman
+
+8.Find out the "Full" containerId of the container and write it below.
+=>
+C:\Users\pawar>docker ps -q
+b2c9de61a173
+3cc2956a449d
+
+9.Find out how many image layers are used to build this image.
+=>
+C:\Users\pawar>docker inspect ubuntu
+[
+    {
+        "Id": "44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442",
+        "Created": "2021-09-03T07:45:02.7640545Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1496,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2021-09-03T07:45:05.3877881Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:dd34e67e3371dc2d1328790c3157ee42dfcae74afffd86b297459ed87a98c0fb",
+        "ResolvConfPath": "/var/lib/docker/containers/44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442/hostname",
+        "HostsPath": "/var/lib/docker/containers/44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442/hosts",
+        "LogPath": "/var/lib/docker/containers/44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442/44a617766cffce09eccaf63119bc2358ee1c00e5c22d387ec494d0241881b442-json.log",
+        "Name": "/MyNginx",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                30,
+                85
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/381d2e620411d4602e5827c48db578af3dbf2b38ee0cbfaf2f9e286ca6bd7024-init/diff:/var/lib/docker/overlay2/9c75ce272d4165bf863ffea24cb844fb26e195a4e58d232d4da37807d9e89dd7/diff:/var/lib/docker/overlay2/4d94cf81a330ff7e3fe04d006b113457f1c64e6301a04c4bad794e25e1c83898/diff:/var/lib/docker/overlay2/e982556e79acfe54526a03dbd56a69002516635e8f2dcb6228f1fe3a6660d8c3/diff:/var/lib/docker/overlay2/26b85a0898c00c647b12167e473f9fd58c4e5b76db80c9de7a15507ff5b48d39/diff:/var/lib/docker/overlay2/9d202ebbd61e5e71328e8874d40a9c959fa04f65c6072eb10433ce21bbc27c69/diff:/var/lib/docker/overlay2/137d81254fa837f482ddf752b0ef0ab47665cd507e5cf55b52a9db350c314a7b/diff",
+                "MergedDir": "/var/lib/docker/overlay2/381d2e620411d4602e5827c48db578af3dbf2b38ee0cbfaf2f9e286ca6bd7024/merged",
+                "UpperDir": "/var/lib/docker/overlay2/381d2e620411d4602e5827c48db578af3dbf2b38ee0cbfaf2f9e286ca6bd7024/diff",
+                "WorkDir": "/var/lib/docker/overlay2/381d2e620411d4602e5827c48db578af3dbf2b38ee0cbfaf2f9e286ca6bd7024/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "44a617766cff",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.21.1",
+                "NJS_VERSION=0.6.1",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers \u003cdocker-maint@nginx.com\u003e"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "eda008cd4d13d50294b09749bd928c50f1bc610ee7a3fc966fcc9f3cb6a441cb",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/eda008cd4d13",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "ea78d6cbaa55e32b29420ffdf78bc41b0677a742d0f3ce0354599b441ae8b4e8",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "a1380d103c32279d5822cf8349c7a8caf119c1214a82ee3ca4eea80e88b5251d",
+                    "EndpointID": "ea78d6cbaa55e32b29420ffdf78bc41b0677a742d0f3ce0354599b441ae8b4e8",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+10.Get the Apache Tomcat 7 server image from the docker hub.
+=>
+C:\Users\pawar>docker pull tomcat:7.0
+7.0: Pulling from library/tomcat
+0bc3020d05f1: Pull complete
+a110e5871660: Pull complete
+83d3c0fa203a: Pull complete
+a8fd09c11b02: Pull complete
+96ebf1506065: Pull complete
+26b72ffca293: Pull complete
+0bffa2ea17aa: Pull complete
+d880cebcc7a6: Pull complete
+d19ab8039b36: Pull complete
+5057492dc495: Pull complete
+Digest: sha256:f7d37d248d0eacec1e5995736234c9c22155626fcb27ea3ead13b9db24e698f7
+Status: Downloaded newer image for tomcat:7.0
+docker.io/library/tomcat:7.0
+
+11.Run the Apache Tomcat 7, I mean create a container of Apache Tomcat.
+=>
+C:\Users\pawar>docker run tomcat:7.0
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version name:   Apache Tomcat/7.0.109
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          Apr 22 2021 18:43:38 UTC
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version number: 7.0.109.0
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Linux
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            5.10.16.3-microsoft-standard-WSL2
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          amd64
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             /usr/local/openjdk-8/jre
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           1.8.0_292-b10
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         /usr/local/tomcat
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         /usr/local/tomcat
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dignore.endorsed.dirs=
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=/usr/local/tomcat
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=/usr/local/tomcat
+Sep 02, 2021 4:58:10 AM org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+Sep 02, 2021 4:58:10 AM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: Loaded Apache Tomcat Native library [1.2.28] using APR version [1.6.5].
+Sep 02, 2021 4:58:10 AM org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+Sep 02, 2021 4:58:10 AM org.apache.catalina.core.AprLifecycleListener initializeSSL
+INFO: OpenSSL successfully initialized [OpenSSL 1.1.1d  10 Sep 2019]
+Sep 02, 2021 4:58:11 AM org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-apr-8080"]
+Sep 02, 2021 4:58:11 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 2394 ms
+Sep 02, 2021 4:58:11 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+Sep 02, 2021 4:58:11 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/7.0.109
+Sep 02, 2021 4:58:11 AM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-apr-8080"]
+Sep 02, 2021 4:58:11 AM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 133 ms
+
+12. Find out what is the IP Address of the Apache Tomcat Container that it is running on.
+=>
+C:\Users\pawar>docker exec -it 6d24ba63ca57 hostname -i
+172.17.0.3
+
+13. Which Port it is using?
+=>
+localhost:8888 port is running.
+
+14. Try to access the Tomcat's home page from your machine/vm.
+=>
+C:\Users\pawar>docker run -it --rm -p 8888:8080 tomcat:8.0
+
+15. What is the disk size of Apache Tomcat image?
+=>
+The disk size of Apache Tomcat image is 533MB
+
+16. Find out list of all environment variables that is configured for tomcat image, can you see JAVA_HOME and CATALINA_HOME? What did you notice about it?
+=>
+C:\Users\pawar>docker exec 6d24ba63ca57 env
+PATH=/usr/local/tomcat/bin:/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=6d24ba63ca57
+JAVA_HOME=/usr/local/openjdk-11
+LANG=C.UTF-8
+JAVA_VERSION=11.0.12
+CATALINA_HOME=/usr/local/tomcat
+TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib
+LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib
+GPG_KEYS=48F8E69F6390C9F25CFEDCD268248959359E722B A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243
+TOMCAT_MAJOR=9
+TOMCAT_VERSION=9.0.52
+TOMCAT_SHA512=35e007e8e30e12889da27f9c71a6f4997b9cb5023b703d99add5de9271828e7d8d4956bf34dd2f48c7c71b4f8480f318c9067a4cd2a6d76eaae466286db4897b
+HOME=/root
+
+docker exec 4fae31f8fce0 env
+PATH=/usr/local/tomcat/bin:/usr/local/openjdk-11/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=4fae31f8fce0
+JAVA_HOME=/usr/local/openjdk-11
+LANG=C.UTF-8
+JAVA_VERSION=11.0.12
+CATALINA_HOME=/usr/local/tomcat
+TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib
+LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib
+GPG_KEYS=48F8E69F6390C9F25CFEDCD268248959359E722B A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243
+TOMCAT_MAJOR=9
+TOMCAT_VERSION=9.0.52
+TOMCAT_SHA512=35e007e8e30e12889da27f9c71a6f4997b9cb5023b703d99add5de9271828e7d8d4956bf34dd2f48c7c71b4f8480f318c9067a4cd2a6d76eaae466286db4897b
+HOME=/root
+
+17. Find out which port is exposed for tomcat?
+=>
+docker port thirsty_ptolemy
+8080/tcp -> 0.0.0.0:8888
+8080/tcp -> :::8888
+
+18. Run multiple conntainers of tomcat on different port and access it's home page.
+=>
+C:\Users\pawar>docker run -d -it --rm -p 7070:8080 tomcat:9
+9e4536965c4eed3576fa4a8eb5152dc9b29da692cc06024967248f8a804cdd28
+
+C:\Users\pawar>docker run -d -it --rm -p 9090:8080 tomcat:9
+9856abd0b0a9daf7b2d2a6194e0cfbfb2233baab7487caef5d6f01055af51460
+
+C:\Users\Asus>docker ps
+CONTAINER ID     IMAGE         COMMAND                        CREATED               STATUS                  PORTS                                                           NAMES
+9856abd0b0a9   tomcat:9   "catalina.sh run"             6 seconds ago     Up 5 seconds     0.0.0.0:9090->8080/tcp, :::9090->8080/tcp   gifted_grothendieck
+9e4536965c4e    tomcat:9   "catalina.sh run"             23 seconds ago   Up 19 seconds   0.0.0.0:7070->8080/tcp, :::7070->8080/tcp   gifted_lalande
+4fae31f8fce0      tomcat:9   "catalina.sh run"             30 minutes ago   Up 29 minutes   0.0.0.0:8888->8080/tcp, :::8888->8080/tcp   thirsty_ptolemy
+6d24ba63ca57   tomcat:9   "catalina.sh run"             39 minutes ago   Up 39 minutes   8080/tcp                                                          MyTomcat
+44a617766cff     nginx         "/docker-entrypoint.…"  24 hours ago       Up 24 hours       80/tcp        
+
+19.Pull ubuntu os from dockerhub, try to pull 2 images of ubuntu, Except the latest one.
+=>
+C:\Users\pawar>docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+Digest: sha256:9d6a8699fb5c9c39cf08a0871bd6219f0400981c570894cd8cbea30d3424a31f
+Status: Image is up to date for ubuntu:latest
+docker.io/library/ubuntu:latest
+
+C:\Users\pawar>docker pull ubuntu:21.10
+21.10: Pulling from library/ubuntu
+25907b3add37: Pull complete
+Digest: sha256:5780eeea246d5e8e76c20dfedf03d4d9568cd4ba00af5a7e3762b6976df2b631
+Status: Downloaded newer image for ubuntu:21.10
+docker.io/library/ubuntu:21.10
+
+C:\Users\pawar>docker pull ubuntu:bionic
+bionic: Pulling from library/ubuntu
+e4ca327ec0e7: Pull complete
+Digest: sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a4bbb8cd79
+Status: Downloaded newer image for ubuntu:bionic
+docker.io/library/ubuntu:bionic
+
+20. Run the container of ubuntu in attached mode.
+=>
+C:\Users\pawar>docker run -it --name myubuntu ubuntu
+root@56630b4ef73e:/#
+
+21. Run the container of another ubuntu in detached mode.
+=>
+C:\Users\pawar>docker run -d -it --name myubuntu2 ubuntu:21.10
+34d22d48b414b2c2fd07e77e3545303b91124a7165f3d98daca145b47ee5607c
+
+22. Check how many ubuntu containers are running and stopped.
+=>
+C:\Users\pawar>docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                        PORTS                                       NAMES
+34d22d48b414   ubuntu:21.10   "bash"                   2 minutes ago    Up 2 minutes                                                              myubuntu2
+50e29e6026e0   ubuntu         "bash"                   4 minutes ago    Up 4 minutes                                                              myubuntu1
+56630b4ef73e   ubuntu         "bash"                   5 minutes ago    Exited (0) 4 minutes ago                                                  myubuntu
+
+23. Is the tomcat container running? If no, start one.
+=>
+It is running.
+
+24.Check the logs, generated by tomcat container(don't forget to make request to tomcat's home page to see the log)
+=>
+C:\Users\pawar>docker logs thirsty_ptolemy
+Using CATALINA_BASE:   /usr/local/tomcat
+Using CATALINA_HOME:   /usr/local/tomcat
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp
+Using JRE_HOME:        /usr/local/openjdk-11
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
+Using CATALINA_OPTS:
+NOTE: Picked up JDK_JAVA_OPTIONS:  --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+04-Sep-2021 06:59:10.782 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.52
+04-Sep-2021 06:59:10.786 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Jul 31 2021 04:12:17 UTC
+04-Sep-2021 06:59:10.786 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.52.0
+04-Sep-2021 06:59:10.786 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Linux
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            5.10.16.3-microsoft-standard-WSL2
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             /usr/local/openjdk-11
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           11.0.12+7
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         /usr/local/tomcat
+04-Sep-2021 06:59:10.787 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         /usr/local/tomcat
+04-Sep-2021 06:59:10.802 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+04-Sep-2021 06:59:10.803 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+04-Sep-2021 06:59:10.803 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+04-Sep-2021 06:59:10.803 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+04-Sep-2021 06:59:10.803 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+04-Sep-2021 06:59:10.803 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dorg.apache.catalina.security.SecurityListener.UMASK=0027
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=/usr/local/tomcat
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=/usr/local/tomcat
+04-Sep-2021 06:59:10.804 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=/usr/local/tomcat/temp
+04-Sep-2021 06:59:10.813 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded Apache Tomcat Native library [1.2.30] using APR version [1.7.0].
+04-Sep-2021 06:59:10.813 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true], UDS [true].
+04-Sep-2021 06:59:10.813 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+04-Sep-2021 06:59:10.821 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1k  25 Mar 2021]
+04-Sep-2021 06:59:11.241 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+04-Sep-2021 06:59:11.276 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [826] milliseconds
+04-Sep-2021 06:59:11.353 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+04-Sep-2021 06:59:11.353 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.52]
+04-Sep-2021 06:59:11.364 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+04-Sep-2021 06:59:11.378 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [101] milliseconds
+
+25. Check if ubuntu conatiner is running? If no, start one in attached mode to the terminal.
+=>
+C:\Users\pawar>docker  attach myubuntu1
+root@50e29e6026e0:/#
+
+26. Login as root user in ubuntu container.
+=>
+C:\Users\pawar>docker exec -it myubuntu1 bash
+root@50e29e6026e0:/#
+
+27. Create a file with any name in root directory.
+=>
+root@50e29e6026e0:/# touch file1
+
+28. Install software of your choice in ubuntu container using "apt-get install".
+=>
+root@50e29e6026e0:/# apt-get install python3
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package python3
+root@50e29e6026e0:/# apt-get update
+Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:5 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [488 kB]
+Get:7 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [30.1 kB]
+Get:8 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [1037 kB]
+Get:9 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [790 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1275 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+Get:12 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [33.4 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1479 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [535 kB]
+Get:16 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1068 kB]
+Get:17 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [2668 B]
+Get:18 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [6324 B]
+Fetched 18.9 MB in 35s (545 kB/s)
+Reading package lists... Done
+
+29. Now exit the ubuntu shell, are you back to your host machine, if not, come back to the host machine.
+=>
+root@56630b4ef73e:/# exit
+exit
+C:\Users\pawar>
+
+30. Check if the ubuntu container is running.
+=>
+C:\Users\pawar>docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS                        PORTS                                       NAMES
+28e3e03327ac   ubuntu:latest   "bash"                   9 seconds ago    Up Less than a second                                                     mybash.1.5er22k1zwadkfbd6ry4xa0v6h
+b80a58f10644   ubuntu:latest   "bash"                   20 seconds ago   Exited (0) 11 seconds ago                                                 mybash.1.ffuo5qihbsyrjnyrufttt787m
+b5fba189e384   ubuntu:latest   "bash"                   31 seconds ago   Exited (0) 22 seconds ago                                                 mybash.1.y10dg7z5i3ak9zmqaqfn5fygp
+e36bc3d1ad00   ubuntu:latest   "bash"                   41 seconds ago   Exited (0) 32 seconds ago                                                 mybash.1.f0em4zy77ewgazm313u5fuplm
+db21555d1480   ubuntu:latest   "bash"                   52 seconds ago   Exited (0) 42 seconds ago                                                 mybash.1.2wvf452cim3a1lsfajib4vyaa
+c60cc1959cb1   ubuntu          "bash"                   19 minutes ago   Created                                                                   mybash1
+
+31. Create a new ubuntu container out of the same image as that previous container in attached mode.
+=>
+C:\Users\pawar>docker run -it --name myubuntu1 ubuntu:rolling
+root@58419a581b6d:/#
+
+32. Login as a root user.
+=>
+C:\Users\pawar>docker exec -it myubuntu1 bash
+root@56630b4ef73e:/#
+
+33. Check if you can see the file created in previous container, you will not see the file as well as software that you installed in the previous container. Now kill this Container.
+=>
+C:\Users\pawar>docker exec -it myubuntu1 bash
+root@50e29e6026e0:/# ls
+bin  boot  demo  dev  etc  file1  filedemo  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@50e29e6026e0:/# exit
+exit
+C:\Users\pawar>docker kill myubuntu1
+myubuntu1
+
+34. Do you have the previous ubuntu container where you created the file and installed the software? If no reapeat step 25 to 29.
+=>
+yes it is available.
+
+35. Create an Image out of the existing container.
+=>
+C:\Users\pawar>docker create --name image1 ubuntu
+cd48b6306e41db10d8c78c505c35d34c0075c235d28a2b31b0c4027d4d6aa6e0
+
+36. Now Create a Container out of this image and login into it to see if you can see the file and software installed by you in the previous container.
+=>
+C:\Users\pawar>docker run -it --name MyUbuntu4 psimg
+root@c8ff64eb2abf:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@c8ff64eb2abf:/# cd /root
+root@c8ff64eb2abf:~# ls
+index.txt
+root@c8ff64eb2abf:~# cd ..
+root@c8ff64eb2abf:/# which python
+/usr/bin/python
+root@c8ff64eb2abf:/# exit
+exit
+
+
+37. Do you have running tomcat container? If yes, Stop it and kill all tomcat container.
+=>
+C:\Users\pawar>docker kill b8d988743720  
+
+38. Create an index.html file with following code in it:-
+<h1>This is Tomcat Container</h1>
+Now, Start a ubuntu container, login into the ubuntu, install nginx, access nginx's home page from the container,Now, come out of the ubuntu container and replace the existing index.html page of nginx with above index.html page that you created, Now access the nginx server from host machine, it should display the index.html that you have created.
+=>
+docker run -d -p 8888:80 nginx
+mkdir -p docker-share/html
+ls
+cd html
+touch index.html
+vi index.html
+<h1>This is Tomcat Container</h1>
+docker stop d2c0127704200
+cd ..
+cd ..
+docker run -d -p 8888:80 -v ~/docker-share/html:/usr/share/nginx/html --hostname nginx_home nginx
+
+when you will open port 8888 you will get the index.html content on the nginx home page.
+
+39. type below command:-docker images --help
+Now, try to run command that proves the concept of following three options:-
+1.-a 2.-f 3.-q
+write atleast 1 command using each option above and prove their concepts as described in the --help
+=>
+[node1] (local) root@192.168.0.8 ~
+$ docker images --help
+
+Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]
+
+List images
+
+Options:
+  -a, --all             Show all images (default hides intermediate images)
+      --digests         Show digests
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Pretty-print images using a Go template
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only show image IDs
+
+[node1] (local) root@192.168.0.8 ~
+$ docker images -a
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+ubuntu       latest    fb52e22af1b0   4 days ago   72.8MB
+ubuntu       latest    fb52e22af1b0   4 days ago   72.8MB
+
+[node1] (local) root@192.168.0.8 ~
+$ docker images -f "dangling=false"
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+ubuntu       latest    fb52e22af1b0   4 days ago   72.8MB
+
+[node1] (local) root@192.168.0.8 ~
+$ docker images -q
+fb52e22af1b0
+
+40. type below command:-docker ps --help
+Now, try to run command that proves the concept of following six options:-
+1. -a
+2. -f
+3. -q
+4. -n
+5. -l
+6. -s
+write atleast 1 command using each option above and prove their concepts as described in the --help.
+=>
+[node1] (local) root@192.168.0.8 ~
+$ docker ps --help
+
+Usage:  docker ps [OPTIONS]
+
+List containers
+
+Options:
+  -a, --all             Show all containers (default shows just running)
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Pretty-print containers using a Go template
+  -n, --last int        Show n last created containers (includes all states) (default -1)
+  -l, --latest          Show the latest created container (includes all states)
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only display container IDs
+  -s, --size            Display total file sizes
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                      PORTS     NAMES
+db032c0c56e9   ubuntu    "bash"    15 minutes ago   Exited (0) 15 minutes ago             silly_mayer
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a -f ID=5adf5e086938
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                     PORTS     NAMES
+5adf5e086938   ubuntu    "bash"    2 minutes ago   Exited (0) 2 minutes ago             hopeful_khayyam
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a --last 2
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                      PORTS     NAMES
+5adf5e086938   ubuntu    "bash"    12 minutes ago   Exited (0) 12 minutes ago             hopeful_khayyam
+db032c0c56e9   ubuntu    "bash"    33 minutes ago   Exited (0) 33 minutes ago             silly_mayer
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a -s
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                      PORTS     NAMES         SIZE
+db032c0c56e9   ubuntu    "bash"    19 minutes ago   Exited (0) 19 minutes ago             silly_mayer   0B (virtual 72.8MB)
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a -l
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                      PORTS     NAMES
+db032c0c56e9   ubuntu    "bash"    19 minutes ago   Exited (0) 19 minutes ago             silly_mayer
+
+[node1] (local) root@192.168.0.8 ~
+$ docker ps -a -q
+db032c0c56e9
+
+41. Type below command:-docker --help
+you will various sections of commands apart from options like "Managemnet Commands" and "Commands".Write some texts below describing the use of "Management Commands".Use each command mentioned below and prove its concepts as described in the --help desription. 
+write what you have understood from the output of the command after its successful execution.
+1. cp
+2. create
+3. export
+4. history
+5. info
+6. login
+7. logout
+8. rename
+9. save
+10. stats
+11. to
+=>
+[node1] (local) root@192.168.0.8 ~
+$ docker cp --help
+
+Usage:  docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+        docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+
+Copy files/folders between a container and the local filesystem
+
+Use '-' as the source to read a tar archive from stdin
+and extract it to a directory destination in a container.
+Use '-' as the destination to stream a tar archive of a
+container source to stdout.
+
+Options:
+  -a, --archive       Archive mode (copy all uid/gid information)
+  -L, --follow-link   Always follow symbol link in SRC_PATH
+
+$ docker cp index.html 5adf5e086938:/tmp :This command copies the the index.html to 5adf5e086938
+
+C:\Users\pawar>docker create --help
+
+Usage:  docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create a new container
+
+Options:
+      --add-host list                  Add a custom host-to-IP mapping
+                                       (host:ip)
+  -a, --attach list                    Attach to STDIN, STDOUT or STDERR
+      --blkio-weight uint16            Block IO (relative weight),
+                                       between 10 and 1000, or 0 to
+                                       disable (default 0)
+      --blkio-weight-device list       Block IO weight (relative device
+                                       weight) (default [])
+      --cap-add list                   Add Linux capabilities
+      --cap-drop list                  Drop Linux capabilities
+      --cgroup-parent string           Optional parent cgroup for the
+                                       container
+      --cgroupns string                Cgroup namespace to use
+                                       (host|private)
+                                       'host':    Run the container in
+                                       the Docker host's cgroup namespace
+                                       'private': Run the container in
+                                       its own private cgroup namespace
+                                       '':        Use the cgroup
+                                       namespace as configured by the
+                                                  default-cgroupns-mode
+                                       option on the daemon (default)
+      --cidfile string                 Write the container ID to the file
+      --cpu-period int                 Limit CPU CFS (Completely Fair
+                                       Scheduler) period
+      --cpu-quota int                  Limit CPU CFS (Completely Fair
+                                       Scheduler) quota
+      --cpu-rt-period int              Limit CPU real-time period in
+                                       microseconds
+      --cpu-rt-runtime int             Limit CPU real-time runtime in
+                                       microseconds
+  -c, --cpu-shares int                 CPU shares (relative weight)
+      --cpus decimal                   Number of CPUs
+      --cpuset-cpus string             CPUs in which to allow execution
+                                       (0-3, 0,1)
+      --cpuset-mems string             MEMs in which to allow execution
+                                       (0-3, 0,1)
+      --device list                    Add a host device to the container
+      --device-cgroup-rule list        Add a rule to the cgroup allowed
+                                       devices list
+      --device-read-bps list           Limit read rate (bytes per second)
+                                       from a device (default [])
+      --device-read-iops list          Limit read rate (IO per second)
+                                       from a device (default [])
+      --device-write-bps list          Limit write rate (bytes per
+                                       second) to a device (default [])
+      --device-write-iops list         Limit write rate (IO per second)
+                                       to a device (default [])
+      --disable-content-trust          Skip image verification (default true)
+      --dns list                       Set custom DNS servers
+      --dns-option list                Set DNS options
+      --dns-search list                Set custom DNS search domains
+      --domainname string              Container NIS domain name
+      --entrypoint string              Overwrite the default ENTRYPOINT
+                                       of the image
+  -e, --env list                       Set environment variables
+      --env-file list                  Read in a file of environment variables
+      --expose list                    Expose a port or a range of ports
+      --gpus gpu-request               GPU devices to add to the
+                                       container ('all' to pass all GPUs)
+      --group-add list                 Add additional groups to join
+      --health-cmd string              Command to run to check health
+      --health-interval duration       Time between running the check
+                                       (ms|s|m|h) (default 0s)
+      --health-retries int             Consecutive failures needed to
+                                       report unhealthy
+      --health-start-period duration   Start period for the container to
+                                       initialize before starting
+                                       health-retries countdown
+                                       (ms|s|m|h) (default 0s)
+      --health-timeout duration        Maximum time to allow one check to
+                                       run (ms|s|m|h) (default 0s)
+      --help                           Print usage
+  -h, --hostname string                Container host name
+      --init                           Run an init inside the container
+                                       that forwards signals and reaps
+                                       processes
+  -i, --interactive                    Keep STDIN open even if not attached
+      --ip string                      IPv4 address (e.g., 172.30.100.104)
+      --ip6 string                     IPv6 address (e.g., 2001:db8::33)
+      --ipc string                     IPC mode to use
+      --isolation string               Container isolation technology
+      --kernel-memory bytes            Kernel memory limit
+  -l, --label list                     Set meta data on a container
+      --label-file list                Read in a line delimited file of labels
+      --link list                      Add link to another container
+      --link-local-ip list             Container IPv4/IPv6 link-local
+                                       addresses
+      --log-driver string              Logging driver for the container
+      --log-opt list                   Log driver options
+      --mac-address string             Container MAC address (e.g.,
+                                       92:d0:c6:0a:29:33)
+  -m, --memory bytes                   Memory limit
+      --memory-reservation bytes       Memory soft limit
+      --memory-swap bytes              Swap limit equal to memory plus
+                                       swap: '-1' to enable unlimited swap
+      --memory-swappiness int          Tune container memory swappiness
+                                       (0 to 100) (default -1)
+      --mount mount                    Attach a filesystem mount to the
+                                       container
+      --name string                    Assign a name to the container
+      --network network                Connect a container to a network
+      --network-alias list             Add network-scoped alias for the
+                                       container
+      --no-healthcheck                 Disable any container-specified
+                                       HEALTHCHECK
+      --oom-kill-disable               Disable OOM Killer
+      --oom-score-adj int              Tune host's OOM preferences (-1000
+                                       to 1000)
+      --pid string                     PID namespace to use
+      --pids-limit int                 Tune container pids limit (set -1
+                                       for unlimited)
+      --platform string                Set platform if server is
+                                       multi-platform capable
+      --privileged                     Give extended privileges to this
+                                       container
+  -p, --publish list                   Publish a container's port(s) to
+                                       the host
+  -P, --publish-all                    Publish all exposed ports to
+                                       random ports
+      --pull string                    Pull image before creating
+                                       ("always"|"missing"|"never")
+                                       (default "missing")
+      --read-only                      Mount the container's root
+                                       filesystem as read only
+      --restart string                 Restart policy to apply when a
+                                       container exits (default "no")
+      --rm                             Automatically remove the container
+                                       when it exits
+      --runtime string                 Runtime to use for this container
+      --security-opt list              Security Options
+      --shm-size bytes                 Size of /dev/shm
+      --stop-signal string             Signal to stop a container
+                                       (default "15")
+      --stop-timeout int               Timeout (in seconds) to stop a
+                                       container
+      --storage-opt list               Storage driver options for the
+                                       container
+      --sysctl map                     Sysctl options (default map[])
+      --tmpfs list                     Mount a tmpfs directory
+  -t, --tty                            Allocate a pseudo-TTY
+      --ulimit ulimit                  Ulimit options (default [])
+  -u, --user string                    Username or UID (format:
+                                       <name|uid>[:<group|gid>])
+      --userns string                  User namespace to use
+      --uts string                     UTS namespace to use
+  -v, --volume list                    Bind mount a volume
+      --volume-driver string           Optional volume driver for the
+                                       container
+      --volumes-from list              Mount volumes from the specified
+                                       container(s)
+  -w, --workdir string                 Working directory inside the container
+
+$ docker create --name web ubuntu
+9710f0836bf7dac34856d072ded6e05b58f33f6eaf7f462779a149b649a7c1c7
+This create  ubuntu container named web
+
+C:\Users\pawar>docker export --help
+
+Usage:  docker export [OPTIONS] CONTAINER
+
+Export a container's filesystem as a tar archive
+
+Options:
+  -o, --output string   Write to a file, instead of STDOUT
+
+
+$ docker export --output="latest.tar" red_panda :docker export will export the contents of the underlying directory.
+
+C:\Users\pawar>docker history --help
+
+Usage:  docker history [OPTIONS] IMAGE
+
+Show the history of an image
+
+Options:
+      --format string   Pretty-print images using a Go template
+  -H, --human           Print sizes and dates in human readable format
+                        (default true)
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only show image IDs
+
+[node1] (local) root@192.168.0.18 ~
+$ docker history -H fb52e22af1b0
+IMAGE          CREATED      CREATED BY                                      SIZE      COMMENT
+fb52e22af1b0   4 days ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B        
+<missing>      4 days ago   /bin/sh -c #(nop) ADD file:d2abf27fe2e8b0b5f…   72.8MB    
+This will show the history of the image Id mentioned.
+
+C:\Users\pawar>docker info --help
+
+Usage:  docker info [OPTIONS]
+
+Display system-wide information
+
+Options:
+  -f, --format string   Format the output using the given Go template
+
+[node1] (local) root@192.168.0.18 ~
+$ docker info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  app: Docker App (Docker Inc., v0.9.1-beta3)
+
+Server:
+ Containers: 1
+  Running: 0
+  Paused: 0
+  Stopped: 1
+ Images: 1
+ Server Version: 20.10.0
+ Storage Driver: overlay2
+  Backing Filesystem: xfs
+  Supports d_type: true
+  Native Overlay Diff: true
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: 1
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 269548fa27e0089a8b8278fc4fc781d7f65a939b
+ runc version: ff819c7e9184c13b7c2607fe6c30ae19403a7aff
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: default
+ Kernel Version: 4.4.0-210-generic
+ Operating System: Alpine Linux v3.12 (containerized)
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 8
+ Total Memory: 31.42GiB
+ Name: node1
+ ID: 2N4Y:6BIJ:ZXLE:MXQ5:6SK7:KE4V:EBGI:PUHW:LFPR:C54G:642O:XBSP
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: true
+  File Descriptors: 24
+  Goroutines: 42
+  System Time: 2021-09-04T08:52:07.658046964Z
+  EventsListeners: 0
+ Registry: https://index.docker.io/v1/
+ Labels:
+ Experimental: true
+ Insecure Registries:
+  127.0.0.1
+  127.0.0.0/8
+ Live Restore Enabled: false
+ Product License: Community Engine
+
+This will display the overall information regarding the docker installation.Information displayed includes the kernel version, number of containers and images. 
+
+
+C:\Users\pawar>docker login --help
+Log in to a Docker registry or cloud backend.
+If no registry server is specified, the default is defined by the daemon.
+
+Usage:
+  docker login [OPTIONS] [SERVER] [flags]
+  docker login [command]
+
+Available Commands:
+  azure       Log in to azure
+
+Flags:
+  -h, --help              Help for login
+  -p, --password string   password
+      --password-stdin    Take the password from stdin
+  -u, --username string   username
+
+Use "docker login [command] --help" for more information about a command.
+
+[node1] (local) root@192.168.0.18 ~
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com t
+o create one.
+Username: 9167109118
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+This will Log in to a Docker registry.
+
+C:\Users\pawar>docker logout --help
+Log out from a Docker registry or cloud backend.
+If no server is specified, the default is defined by the daemon.
+
+Usage:
+  docker logout [SERVER] [flags]
+  docker logout [command]
+
+Available Commands:
+  azure       Logout from Azure
+
+Flags:
+  -h, --help   Help for logout
+
+Use "docker logout [command] --help" for more information about a command.
+
+[node1] (local) root@192.168.0.18 ~
+$ docker logout
+Removing login credentials for https://index.docker.io/v1/
+
+This will Log out from a Docker registry
+
+C:\Users\pawar>docker rename --help
+
+Usage:  docker rename CONTAINER NEW_NAME
+
+Rename a container
+
+[node1] (local) root@192.168.0.18 ~
+$ docker rename affectionate_galois mynginx
+This will rename the file to what is mentioned you can verify using docker ps command.
+
+C:\Users\pawar>docker save --help
+
+Usage:  docker save [OPTIONS] IMAGE [IMAGE...]
+
+Save one or more images to a tar archive (streamed to STDOUT by default)
+
+Options:
+  -o, --output string   Write to a file, instead of STDOUT
+
+docker save --output busybox.tar busybox: This will save the cotent of busybox.tar to busybox.
+
+C:\Users\pawar>docker stats --help
+
+Usage:  docker stats [OPTIONS] [CONTAINER...]
+
+Display a live stream of container(s) resource usage statistics
+
+Options:
+  -a, --all             Show all containers (default shows just running)
+      --format string   Pretty-print images using a Go template
+      --no-stream       Disable streaming stats and only pull the first result
+      --no-trunc        Do not truncate output
+
+$ docker stats mynginx
+CONTAINER ID   NAME      CPU %     MEM USAGE / LIMIT    MEM %     NET I/O   BLOCK I/O     PIDS
+84ec360a9962   mynginx   0.00%     9.27MiB / 31.42GiB   0.03%     0B / 0B   0B / 32.8kB   9
+This will display the conatiner id, name, CPU in percent , memory usage and its limit, net I/O , block I/O and PIDS.
+
+C:\Users\pawar>docker top --help
+
+Usage:  docker top CONTAINER [ps OPTIONS]
+
+Display the running processes of a container
+
+$ docker top mynginx
+PID                 USER                TIME                COMMAND
+6320                root                0:00                nginx: master process nginx -g daemon off;
+6400                101                 0:00                nginx: worker process
+6401                101                 0:00                nginx: worker process
+6402                101                 0:00                nginx: worker process
+6403                101                 0:00                nginx: worker process
+6404                101                 0:00                nginx: worker process
+6405                101                 0:00                nginx: worker process
+6406                101                 0:00                nginx: worker process
+6407                101                 0:00                nginx: worker process
+This will show the running process of a container.
+
+42. Kill all running container in one liner command.
+=>
+$ docker kill -f $(docker ps -a -q)
+
+43. Delete all images in one liner command.
+=>
+$ docker rmi $(docker ps -a -q)
+
+44. Create a simple Dockerfile, build it and run it.
+=>
+[node1] (local) root@192.168.0.18 ~
+$ mkdir file1
+[node1] (local) root@192.168.0.18 ~
+$ cd file1
+[node1] (local) root@192.168.0.18 ~/file1
+$ touch Dockerfile
+[node1] (local) root@192.168.0.18 ~/file1
+$ docker build -t myimage:1.0 .
+Sending build context to Docker daemon  2.048kB
+Step 1/4 : FROM ubuntu
+ ---> fb52e22af1b0
+Step 2/4 : MAINTAINER 9167109118 YASHASVI-SANJAY.PAWAR@CAPGEMINI.COM
+ ---> Running in 8a6410fef53e
+Removing intermediate container 8a6410fef53e
+ ---> 18291ecf4689
+Step 3/4 : RUN apt-get update
+ ---> Running in 7430b67380dd
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:2 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:3 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [30.1 kB]
+Get:4 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [1037 kB]
+Get:5 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [488 kB]
+Get:6 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [790 kB]
+Get:7 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:8 http://archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1275 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+Get:12 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1068 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [33.4 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1479 kB]
+Get:16 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [535 kB]
+Get:17 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [6324 B]
+Get:18 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [2668 B]
+Fetched 18.9 MB in 2s (8303 kB/s)
+Reading package lists...
+Removing intermediate container 7430b67380dd
+ ---> 892ec073ef8d
+Step 4/4 : CMD [ "echo" , "Hello world" ]
+ ---> Running in d8b89c4d5643
+Removing intermediate container d8b89c4d5643
+ ---> e0e6535211d5
+Successfully built e0e6535211d5
+Successfully tagged myimage:1.0
+[node1] (local) root@192.168.0.18 ~/file1
+$ docker run e0e6535211d5
+Hello world
+
+In Dockerfile:
+FROM ubuntu
+MAINTAINER 9167109118 YASHASVI-SANJAY.PAWAR@CAPGEMINI.COM
+RUN apt-get update
+CMD [ "echo" , "Hello world" ]
+
+45. Create one or more Dockerfile that demostrate the following commands in Dockerfile (Write a 
+PoC for each in one or more Dockerfile)
+1. USER
+2. RUN
+3. ENV
+4. CMD
+5. RUN
+6. ENTRYPOINT
+7. EXPOSE
+8. VOLUME 
+=>
+FROM ubuntu
+MAINTAINER 9167109118 YASHASVI-SANJAY.PAWAR@CAPGEMINI.COM
+USER 9167109118 YASHASVI-SANJAY.PAWAR@CAPGEMINI.COM
+RUN apt -get update
+ENV abc="hello"
+CMD [ "echo" , " hello world" ]
+ENTRYPOINT [ "echo", "Hello, World" ]
+EXPOSE 80 
+VOLUME /file1
+
+USER:The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile.
+RUN:The RUN instruction will execute any commands in a new layer on top of the current image and commit the results. The resulting committed image will be used for the next step in the Dockerfile.
+ENV:Environment variables (declared with the ENV statement) can also be used in certain instructions as variables to be interpreted by the Dockerfile.
+CMD:There can only be one CMD instruction in a Dockerfile. If you list more than one CMD then only the last CMD will take effect.
+ENTRYPOINT:An ENTRYPOINT allows you to configure a container that will run as an executable.
+EXPOSE:The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if the protocol is not specified.
+VOLUME:The VOLUME instruction creates a mount point with the specified name and marks it as holding externally mounted volumes from native host or other containers. 
+
+46. Dockerhub:-
+Find a application you care about on docker hub.Launch the container.Install another application in it.Save (commit) the image.
+Upload that to docker hub in your account and share it with a colleague, ask them to use your image and run the container out of it in their machine/vm.
+=>
+docker run -d -it ubuntu
+docker exec -it e30bfc1398b5 bash
+ apt-get update
+ apt-get install nginx
+docker commit e30bfc1398b5 9167109118/nginx1
+docker login
+docker push 9167109118/nginx1:latest
+
+or
+
+[node1] (local) root@192.168.0.13 ~
+$ mkdir demofile
+[node1] (local) root@192.168.0.13 ~
+$ cd demofile
+[node1] (local) root@192.168.0.13 ~/demofile
+$ touch Dockerfile
+[node1] (local) root@192.168.0.13 ~/demofile
+$ cat Dockerfile
+FROM busybox
+CMD echo "Hello world! This is my first Docker image."[node1] (local) root@192.168.0.13 ~/demofile
+$ docker build -t 9167109118/demohub .
+Sending build context to Docker daemon  2.048kB
+Step 1/2 : FROM busybox
+latest: Pulling from library/busybox
+8ec32b265e94: Pull complete 
+Digest: sha256:b37dd066f59a4961024cf4bed74cae5e68ac26b48807292bd12198afa3ecb778
+Status: Downloaded newer image for busybox:latest
+ ---> 42b97d3c2ae9
+Step 2/2 : CMD echo "Hello world! This is my first Docker image."
+ ---> Running in ba17a5002bb3
+Removing intermediate container ba17a5002bb3
+ ---> e5e4d8b0d395
+Successfully built e5e4d8b0d395
+Successfully tagged 9167109118/demohub:latest
+[node1] (local) root@192.168.0.13 ~/demofile
+$ docker run 9167109118/demohub
+Hello world! This is my first Docker image.
+[node1] (local) root@192.168.0.13 ~/demofile
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: 9167109118
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+Login Succeeded
+[node1] (local) root@192.168.0.13 ~/demofile
+$ docker push 9167109118/demohub
+Using default tag: latest
+The push refers to repository [docker.io/9167109118/demohub]
+0fd05bf2930d: Mounted from library/busybox 
+latest: digest: sha256:f97fef7c589f44413a42ba54bc245c06aa7e3e7dea2603ac13752ae4493b0a7b size: 527
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
